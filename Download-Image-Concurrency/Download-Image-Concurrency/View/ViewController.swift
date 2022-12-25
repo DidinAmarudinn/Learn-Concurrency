@@ -10,7 +10,8 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var movieTableView: UITableView!
-    private let pendingOperations = PendingOperations()
+    
+    private var movies: [Movie] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -21,35 +22,39 @@ class ViewController: UIViewController {
         movieTableView.register(
         UINib(nibName: "MovieTableViewCell", bundle: nil),
         forCellReuseIdentifier: "movieTableViewCell")
-        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Task { await getMovies() }
     }
     
-    fileprivate func startOperations(movie: Movie, indexPath: IndexPath) {
-        if movie.state == .new {
-            startDownload(movie: movie, indexPath: indexPath)
+    func getMovies() async {
+        let network = NetworkService()
+        do {
+            movies = try await network.getMovies()
+            movieTableView.reloadData()
+        } catch {
+            fatalError("Error: connection failed")
         }
     }
+    
+    
     
     fileprivate func startDownload(movie: Movie, indexPath: IndexPath) {
-        guard pendingOperations.downloadInProgress[indexPath] == nil else { return }
-        
-        let downloader = ImageDownloader(movie: movie)
-        downloader.completionBlock = {
-            if downloader.isCancelled { return }
-            
-            
-            DispatchQueue.main.async {
-                self.pendingOperations.downloadInProgress.removeValue(forKey: indexPath)
-                self.movieTableView.reloadRows(at: [indexPath], with: .automatic)
+        let imageDownloader = ImageDownloader()
+        if movie.state == .new {
+            Task {
+                do {
+                    let image = try await imageDownloader.downloadImage(url: movie.posterPath)
+                    movie.state = .downloaded
+                    movie.image = image
+                    self.movieTableView.reloadRows(at: [indexPath], with: .automatic)
+                } catch {
+                    movie.state = .failed
+                    movie.image = nil
+                }
             }
         }
-        
-        pendingOperations.downloadInProgress[indexPath] = downloader
-        pendingOperations.downloadQueue.addOperation(downloader)
-    }
-    
-    fileprivate func toggleSuspendOperations(isSuspended: Bool) {
-        pendingOperations.downloadQueue.isSuspended = isSuspended
     }
 }
 
@@ -67,7 +72,7 @@ extension ViewController: UITableViewDataSource {
             if movie.state == .new {
                 cell.indicatorLoading.isHidden = false
                 cell.indicatorLoading.startAnimating()
-                startOperations(movie: movie, indexPath: indexPath)
+                startDownload(movie: movie, indexPath: indexPath)
             } else {
                 cell.indicatorLoading.isHidden = true
                 cell.indicatorLoading.stopAnimating()
@@ -76,15 +81,5 @@ extension ViewController: UITableViewDataSource {
             return cell
         }
         return UITableViewCell()
-    }
-}
-
-extension ViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        toggleSuspendOperations(isSuspended: true)
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        toggleSuspendOperations(isSuspended: false)
     }
 }

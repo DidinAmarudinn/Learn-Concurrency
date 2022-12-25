@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9269F73329583475001C8DE1 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9269F73229583475001C8DE1 /* NetworkService.swift */; };
 		92C3680129545BCA001EC68C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C3680029545BCA001EC68C /* AppDelegate.swift */; };
 		92C3680329545BCA001EC68C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C3680229545BCA001EC68C /* SceneDelegate.swift */; };
 		92C3680529545BCA001EC68C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C3680429545BCA001EC68C /* ViewController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9269F73229583475001C8DE1 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		92C367FD29545BCA001EC68C /* Download-Image-Concurrency.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Download-Image-Concurrency.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C3680029545BCA001EC68C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C3680229545BCA001EC68C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +47,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9269F72E29582FA0001C8DE1 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				92C3680029545BCA001EC68C /* AppDelegate.swift */,
+				92C3680229545BCA001EC68C /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		9269F72F29582FAB001C8DE1 /* FileSystem */ = {
+			isa = PBXGroup;
+			children = (
+				92C3680E29545BCB001EC68C /* Info.plist */,
+				92C3680B29545BCB001EC68C /* LaunchScreen.storyboard */,
+				92C3680929545BCB001EC68C /* Assets.xcassets */,
+			);
+			path = FileSystem;
+			sourceTree = "<group>";
+		};
+		9269F73029582FBB001C8DE1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				92C3681529545C81001EC68C /* MovieTableViewCell.xib */,
+				92C3680629545BCA001EC68C /* Main.storyboard */,
+				92C3681429545C81001EC68C /* MovieTableViewCell.swift */,
+				92C3680429545BCA001EC68C /* ViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9269F73129582FCE001C8DE1 /* NetworkSource */ = {
+			isa = PBXGroup;
+			children = (
+				92C3681C295463D6001EC68C /* ImageDownloader.swift */,
+				92C3681829545EC8001EC68C /* MovieModel.swift */,
+				9269F73229583475001C8DE1 /* NetworkService.swift */,
+			);
+			path = NetworkSource;
+			sourceTree = "<group>";
+		};
 		92C367F429545BCA001EC68C = {
 			isa = PBXGroup;
 			children = (
@@ -64,17 +106,10 @@
 		92C367FF29545BCA001EC68C /* Download-Image-Concurrency */ = {
 			isa = PBXGroup;
 			children = (
-				92C3680029545BCA001EC68C /* AppDelegate.swift */,
-				92C3681429545C81001EC68C /* MovieTableViewCell.swift */,
-				92C3681829545EC8001EC68C /* MovieModel.swift */,
-				92C3681529545C81001EC68C /* MovieTableViewCell.xib */,
-				92C3680229545BCA001EC68C /* SceneDelegate.swift */,
-				92C3680429545BCA001EC68C /* ViewController.swift */,
-				92C3681C295463D6001EC68C /* ImageDownloader.swift */,
-				92C3680629545BCA001EC68C /* Main.storyboard */,
-				92C3680929545BCB001EC68C /* Assets.xcassets */,
-				92C3680B29545BCB001EC68C /* LaunchScreen.storyboard */,
-				92C3680E29545BCB001EC68C /* Info.plist */,
+				9269F73129582FCE001C8DE1 /* NetworkSource */,
+				9269F73029582FBB001C8DE1 /* View */,
+				9269F72F29582FAB001C8DE1 /* FileSystem */,
+				9269F72E29582FA0001C8DE1 /* App */,
 			);
 			path = "Download-Image-Concurrency";
 			sourceTree = "<group>";
@@ -157,6 +192,7 @@
 				92C3681629545C81001EC68C /* MovieTableViewCell.swift in Sources */,
 				92C3681D295463D6001EC68C /* ImageDownloader.swift in Sources */,
 				92C3680329545BCA001EC68C /* SceneDelegate.swift in Sources */,
+				9269F73329583475001C8DE1 /* NetworkService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,7 +341,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9C5D635X2P;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Download-Image-Concurrency/Info.plist";
+				INFOPLIST_FILE = "Download-Image-Concurrency/FileSystem/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -333,7 +369,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9C5D635X2P;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Download-Image-Concurrency/Info.plist";
+				INFOPLIST_FILE = "Download-Image-Concurrency/FileSystem/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
